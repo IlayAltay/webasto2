@@ -53,6 +53,7 @@
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 extern uint32_t tim16_counter;
+extern uint32_t tim14_counter;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -150,7 +151,7 @@ void TIM14_IRQHandler(void)
   /* USER CODE END TIM14_IRQn 0 */
   HAL_TIM_IRQHandler(&htim14);
   /* USER CODE BEGIN TIM14_IRQn 1 */
-
+  tim14_counter++;
   /* USER CODE END TIM14_IRQn 1 */
 }
 
