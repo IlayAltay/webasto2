@@ -47,6 +47,8 @@
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc;
 
+IWDG_HandleTypeDef hiwdg;
+
 TIM_HandleTypeDef htim14;
 TIM_HandleTypeDef htim16;
 
@@ -64,6 +66,7 @@ static void MX_ADC_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_TIM16_Init(void);
 static void MX_TIM14_Init(void);
+static void MX_IWDG_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -220,10 +223,14 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM16_Init();
   MX_TIM14_Init();
+  MX_IWDG_Init();
   /* USER CODE BEGIN 2 */
   //HAL_TIM_Base_Start(&htim16);
   //HAL_TIM_Base_Start_IT(&htim16);
   tim16_counter=0;            // инициализируем счетчик времени
+  tim14_counter=0;            // инициализируем счетчик времени для IWDG
+  HAL_TIM_Base_Start(&htim14);    //запускаем таймер 14
+  HAL_TIM_Base_Start_IT(&htim14);  //запускаем прерывания тайм 14
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -265,6 +272,13 @@ int main(void)
 	  	    //сбрасываем все флаги
 	  	    //переходим в П.1
 //////////////////Вторая генерация проекта/////////////////////////
+	  //сброс сторожевого таймера
+	  if(tim14_counter>20){
+		  tim14_counter=0;
+		  HAL_IWDG_Refresh(&hiwdg);
+	  }
+
+	  //Основная программа
 	  statuspressbutton=Look_button();//спрашиваем чего творится на кнопке запуска
       statusZajiganiya=See_ignation();//спрашиваем включено ли зажигание
           if(statuspressbutton==0){  //если кнопка не была нажата
@@ -745,11 +759,13 @@ void SystemClock_Config(void)
 
   /** Initializes the CPU, AHB and APB busses clocks 
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSI14;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSI14
+                              |RCC_OSCILLATORTYPE_LSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSI14State = RCC_HSI14_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
   RCC_OscInitStruct.HSI14CalibrationValue = 16;
+  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
@@ -828,6 +844,35 @@ static void MX_ADC_Init(void)
 }
 
 /**
+  * @brief IWDG Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_IWDG_Init(void)
+{
+
+  /* USER CODE BEGIN IWDG_Init 0 */
+
+  /* USER CODE END IWDG_Init 0 */
+
+  /* USER CODE BEGIN IWDG_Init 1 */
+
+  /* USER CODE END IWDG_Init 1 */
+  hiwdg.Instance = IWDG;
+  hiwdg.Init.Prescaler = IWDG_PRESCALER_64;
+  hiwdg.Init.Window = 2500;
+  hiwdg.Init.Reload = 2500;
+  if (HAL_IWDG_Init(&hiwdg) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN IWDG_Init 2 */
+
+  /* USER CODE END IWDG_Init 2 */
+
+}
+
+/**
   * @brief TIM14 Initialization Function
   * @param None
   * @retval None
@@ -845,7 +890,7 @@ static void MX_TIM14_Init(void)
   htim14.Instance = TIM14;
   htim14.Init.Prescaler = 7999;
   htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim14.Init.Period = 999;
+  htim14.Init.Period = 99;
   htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
