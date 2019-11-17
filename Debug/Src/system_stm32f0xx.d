@@ -23,6 +23,7 @@ Src/system_stm32f0xx.o: ../Src/system_stm32f0xx.c \
  C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_flash_ex.h \
  C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_i2c.h \
  C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_i2c_ex.h \
+ C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_iwdg.h \
  C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr.h \
  C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr_ex.h \
  C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim.h \
@@ -77,6 +78,8 @@ C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_flash_ex.h:
 C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_i2c.h:
 
 C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_i2c_ex.h:
+
+C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_iwdg.h:
 
 C:/workspace/webasto2/Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_pwr.h:
 
