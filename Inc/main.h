@@ -38,6 +38,7 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 uint32_t tim16_counter;
+uint32_t tim14_counter;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
